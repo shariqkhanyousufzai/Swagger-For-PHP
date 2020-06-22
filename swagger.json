@@ -1,0 +1,89 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Welcome to Voltswitch Gps Inc",
+    "version": "1.0.0",
+    "title": "Voltswitch",
+    "termsOfService": ""
+  },
+  
+  "host": "localhost/voltswitch",
+  "basePath": "/rest/v1/",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Token",
+        "description": "",
+        "operationId": "GetToken",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "username  and password",
+            "description": "Api Username And Password Required",
+            "required": true,
+            "schema": {
+              "$ref": "",
+              "example": "{\nusername : string,\npassword : string\n}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/getAll": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Token",
+        "description": "",
+        "operationId": "GetDevices",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "username  and password",
+            "description": "Api Username And Password Required",
+            "required": true,
+            "schema": {
+              "$ref": "",
+              "example": "{\nusername : string,\npassword : string\n}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+  }
+}

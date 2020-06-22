@@ -1,0 +1,5 @@
+1) npm install -g swagger
+2) npm install --save swagger-ui
+3) npm install --save swagger-ui-dist
+
+Then go to node module seach for the swagger-ui-dist (copy it), paste in localhost directory and run it from swagger-dist url
