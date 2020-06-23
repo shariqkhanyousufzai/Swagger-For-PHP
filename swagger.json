@@ -1,47 +1,39 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
-    "description": "Welcome to Voltswitch Gps Inc",
     "version": "1.0.0",
-    "title": "Voltswitch",
-    "termsOfService": ""
+    "title": "Slack Incoming Webhook"
   },
-  
-  "host": "localhost/voltswitch",
-  "basePath": "/rest/v1/",
-  "schemes": [
-    "https",
-    "http"
+  "externalDocs": {
+    "url": "https://api.slack.com/incoming-webhooks"
+  },
+  "servers": [
+    {
+      "url": "http://localhost/voltswitch/rest/v1"
+    }
   ],
   "paths": {
     "/auth/token": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Get Token",
-        "description": "",
-        "operationId": "GetToken",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "username  and password",
-            "description": "Api Username And Password Required",
-            "required": true,
-            "schema": {
-              "$ref": "",
-              "example": "{\nusername : string,\npassword : string\n}"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -51,39 +43,30 @@
     },
     "/devices/getAll": {
       "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Get Token",
-        "description": "",
-        "operationId": "GetDevices",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "username  and password",
-            "description": "Api Username And Password Required",
-            "required": true,
-            "schema": {
-              "$ref": "",
-              "example": "{\nusername : string,\npassword : string\n}"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
           }
         }
       }
-    },
-
+    }
   }
 }

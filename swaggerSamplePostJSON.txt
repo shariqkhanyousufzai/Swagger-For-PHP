@@ -1,0 +1,28 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Slack Incoming Webhook
+externalDocs:
+  url: https://api.slack.com/incoming-webhooks
+servers:
+  - url: http://localhost/voltswitch/rest/v1
+paths:
+  /devices/getAll:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:          # <!--- form field name
+                  type: string
+                fav_number:    # <!--- form field name
+                  type: integer
+              required:
+                - name
+                - email
+      responses:
+              '200':
+               description: OK
