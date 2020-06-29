@@ -1,20 +1,18 @@
 {
   "openapi": "3.0.0",
-  "info": {
-    "version": "1.0.0",
-    "title": "Slack Incoming Webhook"
-  },
-  "externalDocs": {
-    "url": "https://api.slack.com/incoming-webhooks"
-  },
+  
   "servers": [
     {
-      "url": "http://localhost/voltswitch/rest/v1"
+      "url": "http://localhost/voltswitch/rest/v1" 
     }
   ],
   "paths": {
     "/auth/token": {
       "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Token Using Api Email And Password",
         "requestBody": {
           "required": true,
           "content": {
@@ -22,13 +20,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
+                  "username": {
+                    "type": "string",
+                  },
+                  "password": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "name",
-                  "email"
+                  "username",
+                  "password"
                 ]
               }
             }
@@ -43,6 +44,10 @@
     },
     "/devices/getAll": {
       "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get All Devices",
         "requestBody": {
           "required": true,
           "content": {
@@ -67,6 +72,619 @@
           }
         }
       }
-    }
+    },
+    "/devices/details": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/location": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Current Location",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/search": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Search Devices By Owner, Device, Imei or Vin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "field": {
+                    "enum": [
+                      "imei",
+                      "device_name",
+                      "owner_name",
+                      "vin",
+                    ]
+                  },
+                  "keyword": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                  "field",
+                  "keyword",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/history": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device History (Only 7 days  Date Difference Is Allowed)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "format": "YYYY-MM-DD"
+                  },
+                  "to": {
+                    "format": "YYYY-MM-DD"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                  "from",
+                  "to",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/recovery": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Set Any Specific Vehicle On Recovery!",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "agent_email": {
+                    "type": "string"
+                  },
+                  "expire_date": {
+                    "type": "string"
+                  },
+                },
+                "required": [
+                  "token",
+                  "imei",
+                  "agent_email",
+                  "expire_date",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/locationguide": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Location And Its Event",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "format": "YYYY-MM-DD"
+                  },
+                  "to": {
+                    "format": "YYYY-MM-DD"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/locationguidehourly": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Location And Its Event By Hour",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "format": "YYYY-MM-DD"
+                  },
+                  "to": {
+                    "format": "YYYY-MM-DD"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/locationguideweekly": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Location And Its Event Weekly",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/locationguideweeklyhourly": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Location And Its Event Weekly Hour",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/mileslog": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Miles Log",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "format": "YYYY-MM-DD"
+                  },
+                  "to": {
+                    "format": "YYYY-MM-DD"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                  "from",
+                  "to",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/milesloghourly": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Miles Log By Hour",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                  "date",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/alertlog": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Any Specific Device Alert Log",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "format": "YYYY-MM-DD"
+                  },
+                  "to": {
+                    "format": "YYYY-MM-DD"
+                  }
+                },
+                "required": [
+                  "token",
+                  "imei",
+                  "from",
+                  "to",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/stopengine": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Stop Vehicle Engine",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/startengine": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Start Vehicle Engine",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                },
+                "required": [
+                  "token",
+                  "imei",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/getAll": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get All Users",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                },
+                "required": [
+                  "token",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/details": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get Any Specific User Details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "userid": {
+                    "type": "string"
+                  },
+                },
+                "required": [
+                  "token",
+                  "userid",
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
   }
 }
