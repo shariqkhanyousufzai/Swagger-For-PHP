@@ -1,9 +1,8 @@
 {
   "openapi": "3.0.0",
-  
   "servers": [
     {
-      "url": "http://localhost/voltswitch/rest/v1" 
+      "url": "http://localhost/voltswitch/rest/v1"
     }
   ],
   "paths": {
@@ -21,7 +20,53 @@
                 "type": "object",
                 "properties": {
                   "username": {
-                    "type": "string",
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get User Information Using Token, Email And Password",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
                   },
                   "password": {
                     "type": "string"
@@ -47,25 +92,159 @@
         "tags": [
           "Devices"
         ],
-        "summary": "Get All Devices",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "token": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "token",
-                ]
-              }
-            }
+        "summary": "Get All Devices (Max limit is 200)",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
           }
-        },
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/getAllInactive/token": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get All Inactive Devices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/getAllExpireToday/token": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get All Expired Devices (Today)",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/getAllNearExpire/token": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get All Expire in Month Devices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/devices/getAllExpired/token": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get All Expired Devices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -79,6 +258,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Details",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -86,15 +285,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
-                  }
+                  },
                 },
                 "required": [
-                  "token",
                   "imei",
                 ]
               }
@@ -108,12 +303,84 @@
         }
       }
     },
+    "/devices/transferList/token": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get All Transfer Devices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Start Date (YYYY-MM-DD)"
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "End Date (YYYY-MM-DD)"
+          }
+
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/devices/location": {
       "post": {
         "tags": [
           "Devices"
         ],
         "summary": "Get Any Specific Device Current Location",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -121,15 +388,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "token",
                   "imei",
                 ]
               }
@@ -149,6 +412,26 @@
           "Devices"
         ],
         "summary": "Search Devices By Owner, Device, Imei or Vin",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -156,15 +439,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "field": {
                     "enum": [
                       "imei",
                       "device_name",
                       "owner_name",
-                      "vin",
+                      "vin"
                     ]
                   },
                   "keyword": {
@@ -172,9 +452,8 @@
                   }
                 },
                 "required": [
-                  "token",
                   "field",
-                  "keyword",
+                  "keyword"
                 ]
               }
             }
@@ -193,6 +472,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device History (Only 7 days  Date Difference Is Allowed)",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -200,9 +499,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   },
@@ -214,10 +510,9 @@
                   }
                 },
                 "required": [
-                  "token",
                   "imei",
                   "from",
-                  "to",
+                  "to"
                 ]
               }
             }
@@ -236,6 +531,26 @@
           "Devices"
         ],
         "summary": "Set Any Specific Vehicle On Recovery!",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -243,9 +558,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   },
@@ -254,13 +566,14 @@
                   },
                   "expire_date": {
                     "type": "string"
-                  },
+                  }
                 },
                 "required": [
                   "token",
+                  "user_hash",
                   "imei",
                   "agent_email",
-                  "expire_date",
+                  "expire_date"
                 ]
               }
             }
@@ -279,6 +592,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Location And Its Event",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -286,9 +619,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   },
@@ -300,8 +630,7 @@
                   }
                 },
                 "required": [
-                  "token",
-                  "imei",
+                  "imei"
                 ]
               }
             }
@@ -320,6 +649,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Location And Its Event By Hour",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -327,9 +676,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   },
@@ -341,8 +687,7 @@
                   }
                 },
                 "required": [
-                  "token",
-                  "imei",
+                  "imei"
                 ]
               }
             }
@@ -361,6 +706,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Location And Its Event Weekly",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -368,16 +733,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
-                  },
+                  }
                 },
                 "required": [
-                  "token",
-                  "imei",
+                  "imei"
                 ]
               }
             }
@@ -396,6 +757,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Location And Its Event Weekly Hour",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -403,16 +784,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
-                  },
+                  }
                 },
                 "required": [
-                  "token",
-                  "imei",
+                  "imei"
                 ]
               }
             }
@@ -431,6 +808,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Miles Log",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -438,9 +835,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   },
@@ -453,9 +847,10 @@
                 },
                 "required": [
                   "token",
+                  "user_hash",
                   "imei",
                   "from",
-                  "to",
+                  "to"
                 ]
               }
             }
@@ -474,6 +869,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Miles Log By Hour",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -481,9 +896,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   },
@@ -492,9 +904,8 @@
                   }
                 },
                 "required": [
-                  "token",
                   "imei",
-                  "date",
+                  "date"
                 ]
               }
             }
@@ -513,6 +924,26 @@
           "Devices"
         ],
         "summary": "Get Any Specific Device Alert Log",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -520,9 +951,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
                   },
@@ -534,10 +962,9 @@
                   }
                 },
                 "required": [
-                  "token",
                   "imei",
                   "from",
-                  "to",
+                  "to"
                 ]
               }
             }
@@ -556,6 +983,26 @@
           "Devices"
         ],
         "summary": "Stop Vehicle Engine",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -563,16 +1010,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
-                  },
+                  }
                 },
                 "required": [
                   "token",
-                  "imei",
+                  "user_hash",
+                  "imei"
                 ]
               }
             }
@@ -591,6 +1036,26 @@
           "Devices"
         ],
         "summary": "Start Vehicle Engine",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -598,16 +1063,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
-                    "type": "string"
-                  },
                   "imei": {
                     "type": "string"
-                  },
+                  }
                 },
                 "required": [
-                  "token",
-                  "imei",
+                  "imei"
                 ]
               }
             }
@@ -626,24 +1087,26 @@
           "Users"
         ],
         "summary": "Get All Users",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "token": {
-                    "type": "string"
-                  },
-                },
-                "required": [
-                  "token",
-                ]
-              }
-            }
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -657,34 +1120,32 @@
           "Users"
         ],
         "summary": "Get Any Specific User Details",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "token": {
-                    "type": "string"
-                  },
-                  "userid": {
-                    "type": "string"
-                  },
-                },
-                "required": [
-                  "token",
-                  "userid",
-                ]
-              }
-            }
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token string from auth"
+          },
+          {
+            "in": "header",
+            "name": "user_hash",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User Hash from auth"
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
           }
         }
       }
-    },
+    }
   }
 }

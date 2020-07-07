@@ -49,6 +49,9 @@
         background: #fff;
         text-align: center;
       }
+      .wrapper>section>span>a{
+        display: none!important;
+      }
     </style>
   </head>
 
@@ -61,6 +64,16 @@
     <script src="./swagger-ui-bundle.js"> </script>
     <script src="./swagger-ui-standalone-preset.js"> </script>
     <script>
+
+    // document.addEventListener("DOMContentLoaded", function(event) { 
+    //    var passwrd = prompt("Oh snap! this document is password protected.");
+    //    if (passwrd == "Admin@123") {
+    //     URL = "swagger.json";
+    //    }else{
+    //     URL = "accessdenied.json";
+    //    }
+    //   });
+
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
@@ -80,6 +93,7 @@
 
       window.ui = ui
     }
+
   </script>
   </body>
 </html>
